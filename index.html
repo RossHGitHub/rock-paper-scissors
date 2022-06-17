@@ -9,14 +9,66 @@
 <body>
     <script>
 
-    let userAns = prompt('Rock, Paper or Scissors?');
-    let userAnsLow = userAns.toLowerCase();
-    let options = ['rock', 'paper', 'scissors'];
-    let compAns = options[Math.floor(Math.random()*options.length)];
+let options = ["rock", "paper", "scissors"];
+let compScore = 0;
+let userScore = 0;
+
+function compPlay() {
+  return options[Math.floor(Math.random() * options.length)];
+  }
+
+function userPlay() {
+  let play = prompt('rock, paper or scissors?');
+  
+  if (play === null) {
+    alert('cancelled')
+    } else 
+ return play; 
+}
+
+
+function gameRound(userAns, compAns) {
+  
+ userAns= userPlay().toLowerCase();
+  compAns=compPlay().toLowerCase();
+  alert('Computer answered ' + compAns);
+  
+  if (userAns==compAns) {
+      alert('Draw');
     
-    console.log(compAns);
-    console.log(userAnsLow);
-    
+} else if ((userAns==="rock" && compAns==="scissors") ||
+      (userAns==="scissors" && compAns==="paper") ||
+      (userAns==="paper" && compAns==="rock")) {
+    alert('You win!!');
+  userScore++;
+  alert('your score is ' + userScore + '.');
+  return userScore;
+  
+  } else {
+    alert('Computer wins :(');
+    compScore++;
+    alert('Computer score is '+ compScore + '.');
+    return compScore;
+  }
+  }
+function game() {
+ alert('Right. Rock, paper, scissors. Best out of 5 wins. GO!!');
+  
+  for (i=0; i<5; i++) {
+  gameRound();
+ }
+  if (userScore>compScore) {
+    alert('YOU WON!!  ' + userScore + ' : ' + compScore + '.  ABSOLUTE LEGEND. RE-LOAD TO SMASH IT AGAIN');
+    }
+  else if (compScore>userScore) {
+    alert('YOU LOST PAL.  ' + compScore + ' : ' + userScore + '.  RE-LOAD TO TRY AGAIN YOU FAILURE.');
+   } else if (compScore===userScore) {
+     alert('YA DRAWED: ' + userScore + ':' + compScore + '.  RE-LOAD TO TRY AGAIN');
+  }
+ }
+
+  game();
+
     </script>
     
 </body>
