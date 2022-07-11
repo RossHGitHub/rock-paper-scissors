@@ -7,67 +7,100 @@
     <title>Rock-Paper-Scissors</title>
 </head>
 <body>
-    <script>
 
+  <button id="rock">Rock</button>
+  <button id="paper">Paper</button>
+  <button id="scissors">Scissors</button>
+  <p>User score: <span id = 'user'></span> </p>
+  <p>Comp Score: <span id = 'comp'></span></p>
+
+
+    <script>
 let options = ["rock", "paper", "scissors"];
-let compScore = 0;
 let userScore = 0;
+let compScore = 0;
+
+let body = document.querySelector('body');
+
+    document.getElementById("rock").addEventListener('click', ()=>{gameRound('rock',compPlay())});
+
+    document.getElementById("paper").addEventListener('click', ()=>{gameRound('paper', compPlay())});
+
+    document.getElementById("scissors").addEventListener('click', ()=>{gameRound('scissors', compPlay())});
+
+
+  let user = document.getElementById('user');
+  user.textContent=userScore;
+
+  let com = document.getElementById('comp');
+  com.textContent = compScore;
+
+
+
+
 
 function compPlay() {
-  return options[Math.floor(Math.random() * options.length)];
+  let compAns = options[Math.floor(Math.random() * options.length)];
+  compAns.toLowerCase();
+  return compAns;
   }
 
-function userPlay() {
-  let play = prompt('rock, paper or scissors?');
-  
-  if (play === null) {
-    alert('cancelled')
-    } else 
- return play; 
-}
+
+
 
 
 function gameRound(userAns, compAns) {
+  alert('Computer answered ' + compAns + '.');
   
- userAns= userPlay().toLowerCase();
-  compAns=compPlay().toLowerCase();
-  alert('Computer answered ' + compAns);
-  
-  if (userAns==compAns) {
+  if (userAns===compAns) {
       alert('Draw');
     
 } else if ((userAns==="rock" && compAns==="scissors") ||
       (userAns==="scissors" && compAns==="paper") ||
       (userAns==="paper" && compAns==="rock")) {
-    alert('You win!!');
-  userScore++;
-  alert('your score is ' + userScore + '.');
-  return userScore;
-  
-  } else {
-    alert('Computer wins :(');
-    compScore++;
-    alert('Computer score is '+ compScore + '.');
-    return compScore;
+      userScore++;
+      user.textContent = userScore;
+      scoreCheck()
+    } else {
+  compScore+=1;
+  com.textContent = compScore;
+  scoreCheck()
   }
-  }
-function game() {
- alert('Right. Rock, paper, scissors. Best out of 5 wins. GO!!');
-  
-  for (i=0; i<5; i++) {
-  gameRound();
- }
-  if (userScore>compScore) {
-    alert('YOU WON!!  ' + userScore + ' : ' + compScore + '.  ABSOLUTE LEGEND. RE-LOAD TO SMASH IT AGAIN');
-    }
-  else if (compScore>userScore) {
-    alert('YOU LOST PAL.  ' + compScore + ' : ' + userScore + '.  RE-LOAD TO TRY AGAIN YOU FAILURE.');
-   } else if (compScore===userScore) {
-     alert('YA DRAWED: ' + userScore + ':' + compScore + '.  RE-LOAD TO TRY AGAIN');
-  }
- }
+}
 
-  game();
+function scoreCheck() {
+if (compScore === 5){
+  let reset = document.createElement('div');
+reset.textContent = 'GAME OVER - YA LOST!'
+body.appendChild(reset);
+
+let resetbtn = document.createElement('button');
+resetbtn.textContent = 'Start Again';
+body.appendChild(resetbtn);
+resetbtn.addEventListener('click', ()=>{
+  compScore = 0;
+  userScore = 0;
+com.textContent=compScore;
+user.textContent=userScore;
+body.removeChild(resetbtn);
+body.removeChild(reset);})
+
+} else if (userScore === 5) {
+  let reset = document.createElement('div');
+reset.textContent = 'YOU WON!! CONGRATULALTIONS'
+body.appendChild(reset);
+
+let resetbtn = document.createElement('button');
+resetbtn.textContent = 'Start Again';
+
+body.appendChild(resetbtn);
+resetbtn.addEventListener('click', ()=>{
+  compScore = 0;
+  userScore = 0;
+com.textContent=compScore;
+user.textContent=userScore
+body.removeChild(resetbtn);
+body.removeChild(reset);});}
 
     </script>
     
